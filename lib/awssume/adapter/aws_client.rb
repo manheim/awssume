@@ -14,7 +14,7 @@ module Awssume
         sts_client.assume_role(
           role_arn: config[:role_arn],
           role_session_name: role_session_name
-        ).credentials
+        ).credentials.to_h
       end
 
       def role_session_name

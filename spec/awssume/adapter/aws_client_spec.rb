@@ -24,8 +24,8 @@ describe Awssume::Adapter::AwsClient do
 
   let(:config_hash) do
     {
-      region:   'us-east-1',
-      role_arn: 'arn:aws:iam::XXXXXXXXXXXX:role/aRole',
+      region:            'us-east-1',
+      role_arn:          'arn:aws:iam::XXXXXXXXXXXX:role/aRole',
       role_session_name: 'test-deploy'
     }
   end
@@ -51,15 +51,15 @@ describe Awssume::Adapter::AwsClient do
       subject(:response) { adapter.assume }
 
       it 'should have access_key_id' do
-        expect(response.access_key_id).to eq('ABCDEFGHIJKLMNOPQRST')
+        expect(response[:access_key_id]).to eq('ABCDEFGHIJKLMNOPQRST')
       end
 
       it 'should have secret_access_key' do
-        expect(response.secret_access_key).to eq('XXXXXXXXXXXXXXXXXXXX')
+        expect(response[:secret_access_key]).to eq('XXXXXXXXXXXXXXXXXXXX')
       end
 
       it 'should have session_token' do
-        expect(response.session_token).to eq('SUUUUUUUUPERLONGTOKEN')
+        expect(response[:session_token]).to eq('SUUUUUUUUPERLONGTOKEN')
       end
     end
   end
