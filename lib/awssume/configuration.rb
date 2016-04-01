@@ -7,7 +7,7 @@ module Awssume
 
     def self.defaults
       {
-        region:            ENV['AWS_REGION'],
+        region:            ENV['AWS_REGION'] || ENV['AWS_DEFAULT_REGION'],
         role_arn:          ENV['AWS_ROLE_ARN'],
         role_session_name: ENV['AWS_ROLE_SESSION_NAME'] || default_session_name
       }

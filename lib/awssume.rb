@@ -12,7 +12,11 @@ module Awssume
       role_arn:          config.role_arn,
       role_session_name: config.role_session_name
     )
+    aws_env = {
+      'AWS_REGION'         => config.region,
+      'AWS_DEFAULT_REGION' => config.region
+    }
     creds_hash = adapter.assume
-    system(Awssume::CommandDecorator.format_cmd(ARGV[0..-1], creds_hash))
+    system(aws_env, Awssume::CommandDecorator.format_cmd(ARGV[0..-1], creds_hash))
   end
 end

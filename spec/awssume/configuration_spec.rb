@@ -61,5 +61,17 @@ describe Awssume::Configuration do
       expect(config.role_arn).to eq('arn:aws:iam::123456789012:user/Gary')
       expect(config.role_session_name).to eq('testSessionName')
     end
+
+    it 'can use AWS_DEFAULT_REGION for region' do
+      stub_const(
+        'ENV',
+        'AWS_DEFAULT_REGION'    => 'us-east-1',
+        'AWS_ROLE_ARN'          => 'arn:aws:iam::123456789012:user/Gary',
+        'AWS_ROLE_SESSION_NAME' => 'testSessionName'
+      )
+      config = Awssume::Configuration.new
+
+      expect(config.region).to eq('us-east-1')
+    end
   end
 end
