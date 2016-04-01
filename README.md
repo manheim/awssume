@@ -45,39 +45,42 @@ You can configure env vars to authenticate with AWS:
   $ export AWS_DEFAULT_REGION=us-west-2
 ```
 
-If AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY aren't set then an other
+If AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY aren't set then other
 authentication options are checked(such as instance profiles).  This is
 functionality provided by the aws-sdk.
 
 ```
-  $ gem install awssume
-  $ AWS_REGION=us-east-1 \
-      AWS_ROLE_ARN=arn::aws::iam::123456789012:role/RoletoAssume \
+  $ AWS_ROLE_ARN=arn::aws::iam::123456789012:role/RoletoAssume \
       awssume <command to execute>
 ```
 ```
-  $ gem install awssume
-  $ AWS_REGION=us-east-1 \
-      AWS_ROLE_ARN=arn::aws::iam::123456789012:role/RoletoAssume \
+  $ AWS_ROLE_ARN=arn::aws::iam::123456789012:role/RoletoAssume \
       awssume bundle exec rake component:deploy
 ```
 ```
-  $ gem install awssume
-  $ AWS_REGION=us-east-1 \
-      AWS_ROLE_ARN=arn::aws::iam::123456789012:role/RoletoAssume \
+  $ AWS_ROLE_ARN=arn::aws::iam::123456789012:role/RoletoAssume \
       awssume aws iam list-roles
 ```
+
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run
+`rake spec` to run the tests. You can also run `bin/console` for an interactive
+prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
+To release a new version, update the version number in `version.rb`, and then
+run `bundle exec rake release`, which will create a git tag for the version,
+push git commits and tags, and push the `.gem` file to
+[rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/Manheim/awssume.
+Bug reports and pull requests are welcome on
+GitHub at https://github.com/Manheim/awssume.
 
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the
+[MIT License](http://opensource.org/licenses/MIT).
