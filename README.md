@@ -37,6 +37,18 @@ instructions for using as a library will be added.
 
 Currently the focus has been to use this gem as a command line tool.
 
+You can configure env vars to authenticate with AWS:
+
+```
+  $ export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+  $ export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  $ export AWS_DEFAULT_REGION=us-west-2
+```
+
+If AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY aren't set then an other
+authentication options are checked(such as instance profiles).  This is
+functionality provided by the aws-sdk.
+
 ```
   $ gem install awssume
   $ AWS_REGION=us-east-1 \
