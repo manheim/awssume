@@ -11,7 +11,7 @@ describe Awssume::Adapter::AwsClient do
       ),
       :assumed_role_user => OpenStruct.new(
         :assumed_role_id => 'AXXXXXXXXXXXXXXXXXXXX:test',
-        :arn             => 'arn:aws:sts::XXXXXXXXXXXX:assumed-role/aRole/test'
+        :arn             => 'arn:aws:sts::123456789012:assumed-role/aRole/test'
       )
     )
   end
@@ -25,7 +25,7 @@ describe Awssume::Adapter::AwsClient do
   let(:config_hash) do
     {
       region:            'us-east-1',
-      role_arn:          'arn:aws:iam::XXXXXXXXXXXX:role/aRole',
+      role_arn:          'arn:aws:iam::123456789012:role/aRole',
       role_session_name: 'test-deploy'
     }
   end
@@ -40,7 +40,7 @@ describe Awssume::Adapter::AwsClient do
   describe '#assume', stub_sts: true do
     it 'should call assume_role with proper params' do
       expect(sts_stub).to receive(:assume_role).with(
-        role_arn:          'arn:aws:iam::XXXXXXXXXXXX:role/aRole',
+        role_arn:          'arn:aws:iam::123456789012:role/aRole',
         role_session_name: 'test-deploy'
       )
 
