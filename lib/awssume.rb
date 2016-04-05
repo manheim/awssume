@@ -17,6 +17,12 @@ module Awssume
       'AWS_DEFAULT_REGION' => config.region
     }
     creds_hash = adapter.assume
-    system(aws_env, Awssume::CommandDecorator.format_cmd(ARGV[0..-1], creds_hash))
+    fmt_cmd    = Awssume::CommandDecorator.format_cmd(ARGV[0..-1], creds_hash)
+
+    handle_exit { system(aws_env, fmt_cmd) }
+  end
+
+  def self.handle_exit(&block)
+    block.call ? true : exit(1)
   end
 end
