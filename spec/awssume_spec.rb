@@ -6,40 +6,34 @@ describe Awssume do
   end
 
   describe '.run' do
-    it 'exits badly when the command fails' do
+    before do
       fake_config = double('fake_config')
-      allow(fake_config).to receive(:region)
-      allow(fake_config).to receive(:role_arn)
-      allow(fake_config).to receive(:role_session_name)
+      [:region, :role_arn, :role_session_name].each do |method|
+        allow(fake_config).to receive(method)
+      end
 
       fake_client = double('fake_client')
       allow(fake_client).to receive(:assume).and_return({})
 
       allow(Awssume::Configuration).to receive(:new)
         .and_return(fake_config)
+
       allow(Awssume::Adapter::AwsClient).to receive(:new)
         .and_return(fake_client)
-      allow(Awssume).to receive(:system).and_return(false)
 
-      expect{ Awssume.run }.to raise_error(SystemExit)
+      allow(Awssume).to receive(:system).and_return(status)
     end
 
-    it 'exits goodly when the command fails' do
-      fake_config = double('fake_config')
-      allow(fake_config).to receive(:region)
-      allow(fake_config).to receive(:role_arn)
-      allow(fake_config).to receive(:role_session_name)
+    subject { -> { Awssume.run } }
 
-      fake_client = double('fake_client')
-      allow(fake_client).to receive(:assume).and_return({})
+    context 'when the command returns a failing status' do
+      let(:status) { false }
+      it { is_expected.to raise_error(SystemExit) }
+    end
 
-      allow(Awssume::Configuration).to receive(:new)
-        .and_return(fake_config)
-      allow(Awssume::Adapter::AwsClient).to receive(:new)
-        .and_return(fake_client)
-      allow(Awssume).to receive(:system).and_return(true)
-
-      expect{ Awssume.run }.to_not raise_error
+    context 'when the command returns a passing status' do
+      let(:status) { true }
+      it { is_expected.to_not raise_error }
     end
   end
 end
