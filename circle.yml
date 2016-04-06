@@ -1,0 +1,10 @@
+machine:
+  ruby:
+    version:
+      2.1.2
+dependencies:
+  pre:
+    - gem install bundler --no-rdoc --no-ri -v 1.11.2
+test:
+  override:
+    - bundle exec rake spec
