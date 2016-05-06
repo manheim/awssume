@@ -1,5 +1,7 @@
 # Awssume
 
+[![Circle CI](https://circleci.com/gh/manheim/awssume.svg?style=svg)](https://circleci.com/gh/manheim/awssume)
+
 Assume a role, do a thing.
 
 This is a gem for assuming an AWS IAM role and using the returned temporary
