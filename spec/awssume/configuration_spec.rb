@@ -27,6 +27,21 @@ describe Awssume::Configuration do
       end
     end
 
+    describe 'missing optional attributes' do
+      let(:valid_args) do
+        {
+          region: 'us-east-1',
+          role_arn: 'arn:aws:iam::123456789012:user/David',
+          role_session_name: 'testDeploy'
+        }
+      end
+
+      it 'does not raise error when optional attributes are missing' do
+        expect { Awssume::Configuration.new(valid_args) }
+          .not_to raise_error
+      end
+    end
+
     it 'should provide default session name if none is provided' do
       config = Awssume::Configuration.new(
         role_arn: 'arn:aws:iam::123456789012:user/David',
@@ -53,13 +68,15 @@ describe Awssume::Configuration do
         'ENV',
         'AWS_REGION'            => 'us-east-1',
         'AWS_ROLE_ARN'          => 'arn:aws:iam::123456789012:user/Gary',
-        'AWS_ROLE_SESSION_NAME' => 'testSessionName'
+        'AWS_ROLE_SESSION_NAME' => 'testSessionName',
+        'AWS_ROLE_EXTERNAL_ID'  => '12345abc'
       )
       config = Awssume::Configuration.new
 
       expect(config.region).to eq('us-east-1')
       expect(config.role_arn).to eq('arn:aws:iam::123456789012:user/Gary')
       expect(config.role_session_name).to eq('testSessionName')
+      expect(config.external_id).to eq('12345abc')
     end
 
     it 'can use AWS_DEFAULT_REGION for region' do

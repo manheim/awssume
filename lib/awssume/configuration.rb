@@ -5,15 +5,29 @@ module Awssume
       "AwssumedSession#{Time.new.to_i}"
     end
 
+    # Defaults must have a value: a value passed in or a hardcoded default
+    # The utility will exit with an error if a value is missing for a default
     def self.defaults
       {
         region:            ENV['AWS_REGION'] || ENV['AWS_DEFAULT_REGION'],
         role_arn:          ENV['AWS_ROLE_ARN'],
-        role_session_name: ENV['AWS_ROLE_SESSION_NAME'] || default_session_name
+        role_session_name: ENV['AWS_ROLE_SESSION_NAME'] || default_session_name,
       }
     end
 
-    attr_accessor(*defaults.keys)
+    # Options are not required to have a value
+    # The utility will function without issue if an optional value is missing
+    def self.options
+      {
+        external_id: ENV['AWS_ROLE_EXTERNAL_ID']
+      }
+    end
+
+    def self.attrs
+      self.defaults.merge(self.options)
+    end
+
+    attr_accessor(*attrs.keys)
 
     def initialize(opts = {})
       attrs.each do |k, _|
@@ -24,9 +38,15 @@ module Awssume
 
     private
 
+    def is_optional(attr_key)
+      self.class.options.keys.include?(attr_key)
+    end
+
     def validate_attrs(attrs, attr_key)
       throwout_nils(attrs).fetch(attr_key) do
-        raise ArgumentError, missing_attr_error_msg(attr_key)
+        unless is_optional(attr_key)
+          raise ArgumentError, missing_attr_error_msg(attr_key)
+        end
       end
     end
 
@@ -43,7 +63,7 @@ module Awssume
     end
 
     def attrs
-      self.class.defaults
+      self.class.attrs
     end
   end
 end

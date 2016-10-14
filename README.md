@@ -64,6 +64,19 @@ functionality provided by the aws-sdk.
       awssume aws iam list-roles
 ```
 
+There are scenarios where you might want to [use an external id][aws_ext_id]
+in a condition on your assume role policy. For such cases, the gem will look
+for the ``AWS_ROLE_EXTERNAL_ID`` variable in your environment. If this variable
+is set the value will be sent allong in the STS Assume Role request.
+
+```
+  $ AWS_ROLE_ARN=arn::aws::iam::123456789012:role/RoletoAssume \
+    AWS_ROLE_EXTERNAL_ID=12345 \
+      awssume aws iam list-roles
+```
+
+[aws_ext_id]: http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run

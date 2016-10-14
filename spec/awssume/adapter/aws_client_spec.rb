@@ -47,6 +47,23 @@ describe Awssume::Adapter::AwsClient do
       adapter.assume
     end
 
+    context 'with external id set' do
+      let(:adapter) do
+        c = config_hash.merge({external_id: '12345abc'})
+        Awssume::Adapter::AwsClient.new(c)
+      end
+
+      it 'should call assume_role with external id included' do
+        expect(sts_stub).to receive(:assume_role).with(
+          role_arn:          'arn:aws:iam::123456789012:role/aRole',
+          role_session_name: 'test-deploy',
+          external_id:       '12345abc'
+        )
+
+        adapter.assume
+      end
+    end
+
     context 'successful response' do
       subject(:response) { adapter.assume }
 

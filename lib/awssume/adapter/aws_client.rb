@@ -11,10 +11,7 @@ module Awssume
       end
 
       def assume
-        sts_client.assume_role(
-          role_arn: config[:role_arn],
-          role_session_name: role_session_name
-        ).credentials.to_h
+        sts_client.assume_role(assume_role_params).credentials.to_h
       end
 
       def role_session_name
@@ -22,6 +19,18 @@ module Awssume
       end
 
       private
+
+      def assume_role_params
+        p = {
+          role_arn: config[:role_arn],
+          role_session_name: role_session_name,
+          external_id: config[:external_id]
+        }
+
+        p.delete(:external_id) unless p[:external_id]
+
+        p
+      end
 
       def sts_client
         Aws::STS::Client.new(region: config[:region])
