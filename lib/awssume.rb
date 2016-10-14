@@ -10,7 +10,8 @@ module Awssume
     adapter = Awssume::Adapter::AwsClient.new(
       region:            config.region,
       role_arn:          config.role_arn,
-      role_session_name: config.role_session_name
+      role_session_name: config.role_session_name,
+      external_id:       config.external_id
     )
     aws_env = {
       'AWS_REGION'         => config.region,
