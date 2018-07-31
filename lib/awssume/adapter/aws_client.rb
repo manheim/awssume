@@ -24,10 +24,13 @@ module Awssume
         p = {
           role_arn: config[:role_arn],
           role_session_name: role_session_name,
-          external_id: config[:external_id]
+          external_id: config[:external_id],
+          duration_seconds: config[:duration_seconds],
         }
 
         p.delete(:external_id) unless p[:external_id]
+        p.delete(:duration_seconds) \
+          if p[:duration_seconds].nil? || p[:duration_seconds] == 0
 
         p
       end
