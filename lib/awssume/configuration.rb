@@ -19,7 +19,8 @@ module Awssume
     # The utility will function without issue if an optional value is missing
     def self.options
       {
-        external_id: ENV['AWS_ROLE_EXTERNAL_ID']
+        external_id:       ENV['AWS_ROLE_EXTERNAL_ID'],
+        duration_seconds:  ENV['AWS_ROLE_DURATION_SECONDS'].to_i
       }
     end
 

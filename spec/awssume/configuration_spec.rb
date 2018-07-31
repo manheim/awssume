@@ -66,10 +66,11 @@ describe Awssume::Configuration do
     it 'can set attributes with env vars' do
       stub_const(
         'ENV',
-        'AWS_REGION'            => 'us-east-1',
-        'AWS_ROLE_ARN'          => 'arn:aws:iam::123456789012:user/Gary',
-        'AWS_ROLE_SESSION_NAME' => 'testSessionName',
-        'AWS_ROLE_EXTERNAL_ID'  => '12345abc'
+        'AWS_REGION'                => 'us-east-1',
+        'AWS_ROLE_ARN'              => 'arn:aws:iam::123456789012:user/Gary',
+        'AWS_ROLE_SESSION_NAME'     => 'testSessionName',
+        'AWS_ROLE_EXTERNAL_ID'      => '12345abc',
+        'AWS_ROLE_DURATION_SECONDS' => '43200',
       )
       config = Awssume::Configuration.new
 
@@ -77,6 +78,24 @@ describe Awssume::Configuration do
       expect(config.role_arn).to eq('arn:aws:iam::123456789012:user/Gary')
       expect(config.role_session_name).to eq('testSessionName')
       expect(config.external_id).to eq('12345abc')
+      expect(config.duration_seconds).to eq(43200)
+    end
+
+    it 'handles an unset AWS_ROLE_DURATION_SECONDS' do
+      stub_const(
+        'ENV',
+        'AWS_REGION'                => 'us-east-1',
+        'AWS_ROLE_ARN'              => 'arn:aws:iam::123456789012:user/Gary',
+        'AWS_ROLE_SESSION_NAME'     => 'testSessionName',
+        'AWS_ROLE_EXTERNAL_ID'      => '12345abc',
+      )
+      config = Awssume::Configuration.new
+
+      expect(config.region).to eq('us-east-1')
+      expect(config.role_arn).to eq('arn:aws:iam::123456789012:user/Gary')
+      expect(config.role_session_name).to eq('testSessionName')
+      expect(config.external_id).to eq('12345abc')
+      expect(config.duration_seconds).to eq(0)
     end
 
     it 'can use AWS_DEFAULT_REGION for region' do

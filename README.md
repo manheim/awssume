@@ -48,7 +48,7 @@ You can configure env vars to authenticate with AWS:
 ```
 
 If AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY aren't set then other
-authentication options are checked(such as instance profiles).  This is
+authentication options are checked (such as instance profiles).  This is
 functionality provided by the aws-sdk.
 
 ```
@@ -67,7 +67,7 @@ functionality provided by the aws-sdk.
 There are scenarios where you might want to [use an external id][aws_ext_id]
 in a condition on your assume role policy. For such cases, the gem will look
 for the ``AWS_ROLE_EXTERNAL_ID`` variable in your environment. If this variable
-is set the value will be sent allong in the STS Assume Role request.
+is set the value will be sent along in the STS Assume Role request.
 
 ```
   $ AWS_ROLE_ARN=arn::aws::iam::123456789012:role/RoletoAssume \
@@ -76,6 +76,18 @@ is set the value will be sent allong in the STS Assume Role request.
 ```
 
 [aws_ext_id]: http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html
+
+It's also possible to request credentials that
+[last longer than the default of one hour](https://aws.amazon.com/about-aws/whats-new/2018/03/longer-role-sessions/)
+if the role you're assuming is configured to support them (``MaxSessionDuration``
+greater than 3600 seconds). Here's an example of assuming 12-hour (43200 second; the maximum)
+credentials for a _really_ long-running command:
+
+```
+  $ AWS_ROLE_ARN=arn::aws::iam::123456789012:role/RoletoAssume \
+    AWS_ROLE_DURATION_SECONDS=43200 \
+      awssume really-long-running-command
+```
 
 ## Development
 

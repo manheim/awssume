@@ -64,6 +64,39 @@ describe Awssume::Adapter::AwsClient do
       end
     end
 
+    context 'with duration_seconds set' do
+      let(:adapter) do
+        c = config_hash.merge({duration_seconds: 43200})
+        Awssume::Adapter::AwsClient.new(c)
+      end
+
+      it 'should call assume_role with duration_seconds included' do
+        expect(sts_stub).to receive(:assume_role).with(
+          role_arn:          'arn:aws:iam::123456789012:role/aRole',
+          role_session_name: 'test-deploy',
+          duration_seconds:  43200
+        )
+
+        adapter.assume
+      end
+    end
+
+    context 'with duration_seconds unset' do
+      let(:adapter) do
+        c = config_hash.merge({duration_seconds: 0})
+        Awssume::Adapter::AwsClient.new(c)
+      end
+
+      it 'should call assume_role with duration_seconds included' do
+        expect(sts_stub).to receive(:assume_role).with(
+          role_arn:          'arn:aws:iam::123456789012:role/aRole',
+          role_session_name: 'test-deploy'
+        )
+
+        adapter.assume
+      end
+    end
+
     context 'successful response' do
       subject(:response) { adapter.assume }
 

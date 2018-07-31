@@ -8,7 +8,9 @@ describe Awssume do
   describe '.run' do
     before do
       fake_config = double('fake_config')
-      [:region, :role_arn, :role_session_name, :external_id].each do |method|
+      [
+        :region, :role_arn, :role_session_name, :external_id, :duration_seconds
+      ].each do |method|
         allow(fake_config).to receive(method)
       end
 
