@@ -28,7 +28,9 @@ jobs:
         command: bash .circleci/setup-rubygems.sh
      - run:
         name: Publish to Rubygems
-        command: bundle exec rake release
+        command: |
+          bundle exec rake release
+          shred -u ~/.gem/credentials
 
 workflows:
   version: 2
