@@ -1,4 +1,4 @@
-require 'aws-sdk'
+require 'aws-sdk-core'
 require 'awssume/version'
 require 'awssume/command_decorator'
 require 'awssume/configuration'

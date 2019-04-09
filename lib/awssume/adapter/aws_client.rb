@@ -1,4 +1,4 @@
-require 'aws-sdk'
+require 'aws-sdk-core'
 
 module Awssume
   module Adapter
