@@ -41,8 +41,7 @@ workflows:
           requires:
             - build
           filters:
-            branches:
-              tags:
+            tags:
                 only: /.*/
             branches:
               ignore: /.*/
